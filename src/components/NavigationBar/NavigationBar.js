@@ -3,17 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import Grid from "@material-ui/core/Grid";
 import { Button } from "@material-ui/core";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import taphouselogo from "../../assets/img/taphouselogo.png";
 import { withFirestore, isLoaded } from "react-redux-firebase";
 import firebase from "firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -47,11 +45,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavigationBar = () => {
-  // const user = useSelector((state) => state.authentication.user);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const auth = firebase.auth();
+  const [user] = useAuthState(firebase.auth());
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -129,7 +126,7 @@ const NavigationBar = () => {
           About
         </Link>
       </MenuItem>
-      {isLoaded(auth) && auth.currentuser == null ? (
+      {user == null ? (
         <MenuItem>
           <Link
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
@@ -148,7 +145,7 @@ const NavigationBar = () => {
           </Link>
         </MenuItem>
       )}
-      {isLoaded(auth) && auth.currentuser != null ? (
+      {user != null ? (
         <MenuItem onClick={handleProfileMenuOpen}>
           <Link
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
@@ -200,7 +197,7 @@ const NavigationBar = () => {
             >
               About
             </Button>
-            {isLoaded(auth) && auth.currentuser != null ? (
+            {user != null ? (
               <Button
                 className={classes.navLinks}
                 aria-controls={menuId}

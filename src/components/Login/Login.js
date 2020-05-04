@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, makeStyles } from "@material-ui/core";
-import { isLoaded } from "react-redux-firebase";
 import firebase from "firebase";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   mainContent: {
@@ -28,6 +28,7 @@ function doSignOut() {
 }
 
 export const Login = () => {
+  const history = useHistory();
   const classes = useStyles();
   const auth = firebase.auth;
   function handleLogin(e) {
@@ -38,7 +39,7 @@ export const Login = () => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(function () {
-        console.log("Successfully signed in!");
+        history.push("/");
       })
       .catch(function (error) {
         console.log(error.message);
@@ -78,6 +79,7 @@ export const Login = () => {
               style={{
                 backgroundColor: "white",
                 color: "black",
+                marginLeft: "20px",
               }}
               href="/register"
               className="btn btn-link"
@@ -95,7 +97,6 @@ export const Login = () => {
             >
               Login
             </Button>
-            <button onClick={doSignOut}>Sign out</button>
           </div>
         </form>
       </div>

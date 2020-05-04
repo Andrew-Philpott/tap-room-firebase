@@ -70,208 +70,218 @@ export const BeerList = () => {
       decrementPintsByOne
     );
   };
+  if (isLoaded(beers)) {
+    return (
+      <div
+        style={{
+          height: "100%",
+          backgroundColor: "black",
+        }}
+      >
+        <Container>
+          <Grid container>
+            <Grid item xs={8}>
+              <br></br>
+              <span style={{ color: "white", fontSize: "2em" }}>
+                Beer... Delicious beer.
+              </span>
+              {user && <h1>{user.email}</h1>}
+              <br></br>
+            </Grid>
+            <Grid item xs={4}>
+              <Button
+                style={{ backgroundColor: "white", float: "right" }}
+                href="/new"
+              >
+                Add beer
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <TableContainer>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell
+                        className={classes.tableCell}
+                        component="th"
+                        scope="row"
+                      >
+                        On Tap
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Brand
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Flavor
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        ABV
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Price
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Pints
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Buy
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Restock
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Edit
+                      </TableCell>
+                      <TableCell className={classes.tableCell} align="left">
+                        Remove
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {beers &&
+                      beers.map((beer) => (
+                        <TableRow key={beer.id}>
+                          <TableCell className={classes.tableCell}>
+                            <Link
+                              to={`/beers/${beer.id}`}
+                              // onClick={() => props.onShowBeerDetail(beer.id)}
+                              className={classes.actionLinkStyle}
+                            >
+                              {beer.name}
+                              {beer.pints > 10 ? (
+                                ""
+                              ) : beer.pints > 0 ? (
+                                <>
+                                  <br />
+                                  <i style={{ color: "yellow" }}>
+                                    Almost Empty
+                                  </i>
+                                </>
+                              ) : (
+                                <>
+                                  <br />
+                                  <i style={{ color: "red" }}>Out of stock</i>
+                                </>
+                              )}
+                            </Link>
+                          </TableCell>
+                          <TableCell className={classes.tableCell} align="left">
+                            {beer.brand}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} align="left">
+                            {beer.flavor}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} align="left">
+                            {beer.alcoholContent}
+                          </TableCell>
+                          {beer.price > 12 ? (
+                            <TableCell
+                              style={{ color: "orange", borderBottom: "none" }}
+                              align="left"
+                            >
+                              {beer.price}
+                            </TableCell>
+                          ) : beer.price > 8 ? (
+                            <TableCell
+                              style={{ color: "yellow", borderBottom: "none" }}
+                              align="left"
+                            >
+                              {beer.price}
+                            </TableCell>
+                          ) : (
+                            <TableCell
+                              style={{ color: "green", borderBottom: "none" }}
+                              align="left"
+                            >
+                              {beer.price}
+                            </TableCell>
+                          )}
+                          <TableCell className={classes.tableCell} align="left">
+                            {beer.pints}
+                          </TableCell>
+                          {beer.pints > 0 ? (
+                            <TableCell
+                              className={classes.tableCell}
+                              align="center"
+                            >
+                              <span
+                                style={{ fontSize: "1.8em" }}
+                                className={classes.actionLinkStyle}
+                                onClick={() =>
+                                  decrementBeerPints(beer.id, beer.pints)
+                                }
+                              >
+                                -
+                              </span>
+                            </TableCell>
+                          ) : (
+                            <TableCell
+                              className={classes.tableCell}
+                              align="center"
+                            >
+                              <span
+                                style={{ fontSize: "1.8em" }}
+                                className={classes.actionLinkStyle}
+                                onClick={() =>
+                                  decrementBeerPints(beer.id, beer.pints)
+                                }
+                              >
+                                -
+                              </span>
+                            </TableCell>
+                          )}
 
-  return (
-    <div
-      style={{
-        height: "100%",
-        backgroundColor: "black",
-      }}
-    >
-      <Container>
-        <Grid container>
-          <Grid item xs={8}>
-            <br></br>
-            <span style={{ color: "white", fontSize: "2em" }}>
-              Beer... Delicious beer.
-            </span>
-            {user && <h1>{user.email}</h1>}
-            <br></br>
-          </Grid>
-          <Grid item xs={4}>
-            <Button
-              style={{ backgroundColor: "white", float: "right" }}
-              href="/new"
-            >
-              Add beer
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <TableContainer>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      className={classes.tableCell}
-                      component="th"
-                      scope="row"
-                    >
-                      On Tap
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Brand
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Flavor
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      ABV
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Price
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Pints
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Buy
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Restock
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Edit
-                    </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
-                      Remove
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {beers &&
-                    beers.map((beer) => (
-                      <TableRow key={beer.id}>
-                        <TableCell className={classes.tableCell}>
-                          <Link
-                            to={`/beers/${beer.id}`}
-                            // onClick={() => props.onShowBeerDetail(beer.id)}
-                            className={classes.actionLinkStyle}
-                          >
-                            {beer.name}
-                            {beer.pints > 10 ? (
-                              ""
-                            ) : beer.pints > 0 ? (
-                              <>
-                                <br />
-                                <i style={{ color: "yellow" }}>Almost Empty</i>
-                              </>
-                            ) : (
-                              <>
-                                <br />
-                                <i style={{ color: "red" }}>Out of stock</i>
-                              </>
-                            )}
-                          </Link>
-                        </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {beer.brand}
-                        </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {beer.flavor}
-                        </TableCell>
-                        <TableCell className={classes.tableCell} align="left">
-                          {beer.alcoholContent}
-                        </TableCell>
-                        {beer.price > 12 ? (
-                          <TableCell
-                            style={{ color: "orange", borderBottom: "none" }}
-                            align="left"
-                          >
-                            {beer.price}
-                          </TableCell>
-                        ) : beer.price > 8 ? (
-                          <TableCell
-                            style={{ color: "yellow", borderBottom: "none" }}
-                            align="left"
-                          >
-                            {beer.price}
-                          </TableCell>
-                        ) : (
-                          <TableCell
-                            style={{ color: "green", borderBottom: "none" }}
-                            align="left"
-                          >
-                            {beer.price}
-                          </TableCell>
-                        )}
-                        <TableCell className={classes.tableCell} align="left">
-                          {beer.pints}
-                        </TableCell>
-                        {beer.pints > 0 ? (
                           <TableCell
                             className={classes.tableCell}
                             align="center"
                           >
                             <span
-                              style={{ fontSize: "1.8em" }}
                               className={classes.actionLinkStyle}
                               onClick={() =>
-                                decrementBeerPints(beer.id, beer.pints)
+                                incrementBeerPints(beer.id, beer.pints)
                               }
                             >
-                              -
+                              +
                             </span>
                           </TableCell>
-                        ) : (
                           <TableCell
                             className={classes.tableCell}
                             align="center"
                           >
+                            <Link to={`/beers/edit/${beer.id}`}>
+                              <EditIcon
+                                style={{
+                                  cursor: "pointer",
+                                }}
+                              ></EditIcon>
+                            </Link>
+                          </TableCell>
+                          <TableCell
+                            style={{
+                              borderBottom: "none",
+                            }}
+                            align="center"
+                          >
                             <span
-                              style={{ fontSize: "1.8em" }}
                               className={classes.actionLinkStyle}
-                              onClick={() =>
-                                decrementBeerPints(beer.id, beer.pints)
-                              }
+                              onClick={() => deleteBeer(beer.id)}
                             >
-                              -
+                              X
                             </span>
                           </TableCell>
-                        )}
-
-                        <TableCell className={classes.tableCell} align="center">
-                          <span
-                            className={classes.actionLinkStyle}
-                            onClick={() =>
-                              incrementBeerPints(beer.id, beer.pints)
-                            }
-                          >
-                            +
-                          </span>
-                        </TableCell>
-                        <TableCell className={classes.tableCell} align="center">
-                          <Link to={`/beers/edit/${beer.id}`}>
-                            <EditIcon
-                              style={{
-                                cursor: "pointer",
-                              }}
-                            ></EditIcon>
-                          </Link>
-                        </TableCell>
-                        <TableCell
-                          style={{
-                            borderBottom: "none",
-                          }}
-                          align="center"
-                        >
-                          <span
-                            className={classes.actionLinkStyle}
-                            onClick={() => deleteBeer(beer.id)}
-                          >
-                            X
-                          </span>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </div>
-  );
-  // }
+        </Container>
+      </div>
+    );
+  } else {
+    return <h1>Loading..</h1>;
+  }
 };
 
 export default withFirestore(BeerList);
