@@ -1,81 +1,68 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Container, Grid } from "@material-ui/core";
+import { withFirestore, useFirestore } from "react-redux-firebase";
+import { useFirestoreConnect } from "react-redux-firebase";
 
-export const BeerDetail = (props) => {
-  const {
-    brand,
-    color,
-    aroma,
-    flavor,
-    alcoholContent,
-    reviews,
-    price,
-    name,
-    pints,
-    id,
-  } = props.beer;
-  const isBackgroundBlack = false;
+export const BeerDetail = () => {
+  const { id } = useParams();
+  useFirestoreConnect([{ collection: "beers" }]);
+  const firestore = useFirestore();
+  const [beer, setBeer] = useState({});
+
+  firestore.get({ collection: "beers", doc: id }).then((b) => {
+    const firestoreBeer = {
+      name: b.get("name"),
+      brand: b.get("brand"),
+      color: b.get("color"),
+      aroma: b.get("aroma"),
+      flavor: b.get("flavor"),
+      alcoholContent: b.get("alcoholContent"),
+      price: b.get("price"),
+    };
+    setBeer(firestoreBeer);
+  });
+
   return (
-    <React.Fragment>
-      <div
-        style={{
-          width: "100%",
-          marginTop: "25%",
-          backgroundColor: isBackgroundBlack ? "black" : "white",
-          alignContent: "left",
-        }}
-      >
-        <Container key={id}>
-          <h1>{name}</h1>
-          <Grid container>
-            <Grid item xs={4}>
-              <p>Brand: {brand}</p>
-              <p>Color: {color}</p>
-              <p>Aroma: {aroma}</p>
-              <p>Flavor: {flavor}</p>
-            </Grid>
-            <Grid item xs={4}>
-              <p>Alcohol Content: {alcoholContent}</p>
-              <p>Price: ${price}</p>
-              <p>Pints Left: {pints}</p>
-            </Grid>
-          </Grid>
-        </Container>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "black",
+        color: "white",
+      }}
+    >
+      {beer && (
         <Container>
-          <Grid item xs={12}>
-            <h2>Reviews</h2>
-            {reviews &&
-              Object.values(reviews).map((review) => {
-                let { rating, description } = review;
-                return (
-                  <>
-                    <p>{rating}</p>
-                    <p>{description}</p>
-                  </>
-                );
-              })}
+          <Grid container>
+            <Grid item xs={12}>
+              <h1>{beer.name}</h1>
+            </Grid>
+            <Grid item xs={6}>
+              <p>Brand: {beer.brand}</p>
+              <p>Color: {beer.color}</p>
+              <p>Aroma: {beer.aroma}</p>
+              <p>Flavor: {beer.flavor}</p>
+            </Grid>
+            <Grid item xs={6}>
+              <p>Alcohol Content: {beer.alcoholContent}</p>
+              <p>Price: ${beer.price}</p>
+              <p>Pints Left: {beer.pints}</p>
+            </Grid>
           </Grid>
+          {beer.reviews &&
+            beer.reviews.map((review) => {
+              return (
+                <>
+                  <p>{review.rating}</p>
+                  <p>{review.rating}</p>
+                </>
+              );
+            })}
         </Container>
-      </div>
-    </React.Fragment>
+      )}
+    </div>
   );
 };
 
-BeerDetail.propTypes = {
-  beer: PropTypes.object,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  alcoholContent: PropTypes.number,
-  aroma: PropTypes.string,
-  color: PropTypes.string,
-  pints: PropTypes.number,
-  flavor: PropTypes.string,
-  brand: PropTypes.string,
-  reviews: PropTypes.object,
-  rating: PropTypes.number,
-  description: PropTypes.string,
-};
-
-export default BeerDetail;
+export default withFirestore(BeerDetail);

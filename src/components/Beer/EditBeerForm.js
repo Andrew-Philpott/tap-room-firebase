@@ -1,148 +1,166 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Input, Button, Grid } from "@material-ui/core";
-import { InputLabel } from "@material-ui/core";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { useFirestore } from "react-redux-firebase";
 
-export const EditBeerForm = (props) => {
-  const {
-    brand,
-    color,
-    aroma,
-    flavor,
-    alcoholContent,
-    price,
-    name,
-    pints,
-    id,
-  } = props.beer;
-  const { onEditBeerFormSubmission } = props.onEditBeerFormSubmission;
-  const isBackgroundBlack = false;
-  function handleEditBeerFormSubmission(event) {
+const useStyles = makeStyles({
+  mainContent: {
+    backgroundColor: "black",
+    color: "white",
+    marginTop: "20%",
+  },
+  label: {
+    color: "white",
+  },
+});
+
+export const EditBeerForm = () => {
+  const classes = useStyles();
+  const { id } = useParams();
+
+  const firestore = useFirestore();
+  const [beer, setBeer] = useState({});
+
+  firestore.get({ collection: "beers", doc: id }).then((b) => {
+    const firestoreBeer = {
+      name: b.get("name"),
+      brand: b.get("brand"),
+      color: b.get("color"),
+      aroma: b.get("aroma"),
+      flavor: b.get("flavor"),
+      alcoholContent: b.get("alcoholContent"),
+      price: b.get("price"),
+      pints: b.get("pints"),
+    };
+    setBeer(firestoreBeer);
+  });
+
+  function editBeerInFirestore(event) {
     event.preventDefault();
-    onEditBeerFormSubmission({
-      id: id,
+    const propertiesToUpdate = {
       name: event.target.name.value,
       brand: event.target.brand.value,
       color: event.target.color.value,
       aroma: event.target.aroma.value,
       flavor: event.target.flavor.value,
-      price: event.target.price.value,
-      alcoholContent: event.target.alcoholContent.value,
-      pints: event.target.pints.value,
-    });
+      price: parseInt(event.target.price.value),
+      alcoholContent: parseInt(event.target.alcoholContent.value),
+      pints: parseInt(event.target.pints.value),
+    };
+    return firestore.update(
+      { collection: "beers", doc: id },
+      propertiesToUpdate
+    );
   }
 
   return (
-    <React.Fragment>
-      <div
-        style={{
-          width: "100%",
-          marginTop: "25%",
-          justifyContent: "center",
-          backgroundColor: isBackgroundBlack ? "black" : "white",
-        }}
-      >
-        <form onSubmit={handleEditBeerFormSubmission}>
-          <Grid container>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="name">Name</InputLabel>
-              <Input
-                defaultValue={name}
-                id="name"
-                type="text"
-                name="name"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="brand">Brand</InputLabel>
-              <Input
-                defaultValue={brand}
-                id="brand"
-                type="text"
-                name="brand"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="color">Color</InputLabel>
-              <Input
-                defaultValue={color}
-                id="color"
-                type="text"
-                name="color"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="aroma">Aroma</InputLabel>
-              <Input
-                defaultValue={aroma}
-                id="aroma"
-                type="text"
-                name="aroma"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="flavor">Flavor</InputLabel>
-              <Input
-                defaultValue={flavor}
-                id="flavor"
-                type="text"
-                name="flavor"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="price">Price</InputLabel>
-              <Input
-                defaultValue={price}
-                id="price"
-                type="text"
-                name="price"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="alcoholContent">AlcoholContent</InputLabel>
-              <Input
-                defaultValue={alcoholContent}
-                id="alcoholContent"
-                type="text"
-                name="alcoholContent"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="pints">Pints</InputLabel>
-              <Input
-                defaultValue={pints}
-                id="pints"
-                type="text"
-                name="pints"
-                required
-              />
-            </Grid>
-          </Grid>
+    <div className={classes.mainContext}>
+      <div className={"col-lg-8 offset-lg-2"}>
+        <form onSubmit={editBeerInFirestore}>
+          <div className="form-group">
+            <label className={classes.label}>Name:</label>
+            <input
+              defaultValue={beer.name}
+              id="name"
+              type="text"
+              name="name"
+              className={"form-control"}
+            />
+          </div>
 
-          <Button type="submit">Edit Beer</Button>
+          <div className="form-group">
+            <label className={classes.label}>Brand:</label>
+            <input
+              defaultValue={beer.brand}
+              id="brand"
+              type="text"
+              name="brand"
+              className={"form-control"}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className={classes.label} htmlFor="color">
+              Color:
+            </label>
+            <input
+              defaultValue={beer.color}
+              id="color"
+              type="text"
+              name="color"
+              className={"form-control"}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className={classes.label} htmlFor="aroma">
+              Aroma:
+            </label>
+            <input
+              defaultValue={beer.aroma}
+              id="aroma"
+              type="text"
+              name="aroma"
+              className={"form-control"}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className={classes.label} htmlFor="flavor">
+              Flavor:
+            </label>
+            <input
+              defaultValue={beer.flavor}
+              id="flavor"
+              type="text"
+              name="flavor"
+              className={"form-control"}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className={classes.label} htmlFor="price">
+              Price:
+            </label>
+            <input
+              defaultValue={beer.price}
+              id="price"
+              type="text"
+              name="price"
+              className={"form-control"}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className={classes.label} htmlFor="alcoholContent">
+              AlcoholContent:
+            </label>
+            <input
+              defaultValue={beer.alcoholContent}
+              id="alcoholContent"
+              type="text"
+              name="alcoholContent"
+              className={"form-control"}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className={classes.label} htmlFor="pints">
+              Pints:
+            </label>
+            <input
+              defaultValue={beer.pints}
+              id="pints"
+              type="text"
+              name="pints"
+              className={"form-control"}
+            />
+          </div>
+
+          <Button type="submit">Add Beer</Button>
         </form>
       </div>
-    </React.Fragment>
+    </div>
   );
-};
-
-EditBeerForm.propTypes = {
-  onNewBeerFormSubmission: PropTypes.func,
-  beer: PropTypes.object,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  alcoholContent: PropTypes.number,
-  aroma: PropTypes.string,
-  color: PropTypes.string,
-  pints: PropTypes.number,
-  flavor: PropTypes.string,
-  brand: PropTypes.string,
-  reviews: PropTypes.object,
 };

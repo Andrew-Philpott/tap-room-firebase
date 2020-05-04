@@ -12,7 +12,6 @@ const useStyles = makeStyles({
   },
   navbar: {
     backgroundColor: "#cc7000",
-    marginBottom: "200",
   },
 });
 

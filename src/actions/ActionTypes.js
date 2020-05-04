@@ -1,4 +1,3 @@
-export const NEW_BEER = "NEW_BEER";
 export const DELETE_BEER = "DELETE_BEER";
 export const UPDATE_BEER = "UPDATE_BEER";
 export const INCREASE_BEER_PINT_QUANTITY = "INCREASE_BEER_PINT_QUANTITY";

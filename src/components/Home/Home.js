@@ -1,12 +1,16 @@
 import React from "react";
 import CardMedia from "@material-ui/core/CardMedia";
-import beer from "../../assets/img/beer.jpg";
-
+import BeerPic from "../../assets/img/BeerPic.jpg";
+import { Grid, Container } from "@material-ui/core";
 export const Home = () => {
   return (
-    <CardMedia
-      style={{ height: "500", width: "100%" }}
-      image={beer}
-    ></CardMedia>
+    <Container>
+      <Grid container>
+        <CardMedia
+          style={{ height: "400px", width: "100%" }}
+          image={BeerPic}
+        ></CardMedia>
+      </Grid>
+    </Container>
   );
 };

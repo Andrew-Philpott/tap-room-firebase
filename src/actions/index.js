@@ -1,10 +1,5 @@
 import * as a from "./ActionTypes";
 
-export const newBeer = (beer) => ({
-  type: a.NEW_BEER,
-  payload: beer,
-});
-
 export const deleteBeer = (id) => ({
   type: a.DELETE_BEER,
   payload: id,
