@@ -40,18 +40,6 @@ export const Register = () => {
         <h1>Register</h1>
         <br></br>
         <form onSubmit={handleSubmit}>
-          {/* <div className="form-group">
-            <label>First Name:&nbsp;</label>
-            <input type="text" name="firstName" className={"form-control"} />
-          </div>
-          <div className="form-group">
-            <label>Last Name:&nbsp;</label>
-            <input type="text" name="lastName" className={"form-control"} />
-          </div>
-          <div className="form-group">
-            <label>Username:&nbsp;</label>
-            <input type="text" name="userName" className={"form-control"} />
-          </div> */}
           <div className="form-group">
             <label>Email:&nbsp;</label>
             <input type="text" name="email" className={"form-control"} />
@@ -61,12 +49,6 @@ export const Register = () => {
             <input type="password" name="password" className={"form-control"} />
           </div>
           <div className="form-group">
-            {/* <Button
-              style={{ backgroundColor: "white", color: "black" }}
-              href="/login"
-            >
-              Cancel
-            </Button> */}
             <Button
               style={{ backgroundColor: "white", color: "black" }}
               type="submit"

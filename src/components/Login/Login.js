@@ -15,18 +15,6 @@ const useStyles = makeStyles({
   },
 });
 
-function doSignOut() {
-  firebase
-    .auth()
-    .signOut()
-    .then(function () {
-      console.log("Successfully signed out!");
-    })
-    .catch(function (error) {
-      console.log(error.message);
-    });
-}
-
 export const Login = () => {
   const history = useHistory();
   const classes = useStyles();
@@ -39,6 +27,7 @@ export const Login = () => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(function () {
+        setTimeout(null, 50);
         history.push("/");
       })
       .catch(function (error) {

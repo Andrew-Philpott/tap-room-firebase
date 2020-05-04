@@ -10,14 +10,11 @@ import { Grid, Container, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import {
-  useFirestoreConnect,
-  useFirestore,
-  useFirebase,
-} from "react-redux-firebase";
+import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { withFirestore, isLoaded } from "react-redux-firebase";
 import firebase from "firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+
 const useStyles = makeStyles({
   orange: {
     color: "orange",
@@ -62,13 +59,15 @@ export const BeerList = () => {
   };
 
   const decrementBeerPints = (id, pints) => {
-    const decrementPintsByOne = {
-      pints: parseInt(pints - 1),
-    };
-    return firestore.update(
-      { collection: "beers", doc: id },
-      decrementPintsByOne
-    );
+    if (pints !== 0) {
+      const decrementPintsByOne = {
+        pints: parseInt(pints - 1),
+      };
+      return firestore.update(
+        { collection: "beers", doc: id },
+        decrementPintsByOne
+      );
+    }
   };
   if (isLoaded(beers)) {
     return (
@@ -144,7 +143,6 @@ export const BeerList = () => {
                           <TableCell className={classes.tableCell}>
                             <Link
                               to={`/beers/${beer.id}`}
-                              // onClick={() => props.onShowBeerDetail(beer.id)}
                               className={classes.actionLinkStyle}
                             >
                               {beer.name}

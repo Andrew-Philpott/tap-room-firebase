@@ -9,9 +9,9 @@ import { Button } from "@material-ui/core";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import taphouselogo from "../../assets/img/taphouselogo.png";
-import { withFirestore, isLoaded } from "react-redux-firebase";
 import firebase from "firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -45,12 +45,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavigationBar = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [user] = useAuthState(firebase.auth());
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  function handleSignOut() {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        setTimeout(null, 50);
+        history.push("/");
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -83,7 +97,7 @@ const NavigationBar = () => {
       <MenuItem onClick={handleMenuClose}>
         <Link
           style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
-          to={`/login`}
+          onClick={handleSignOut}
         >
           Logout
         </Link>
@@ -139,7 +153,7 @@ const NavigationBar = () => {
         <MenuItem>
           <Link
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
-            to={`/login`}
+            onClick={handleSignOut}
           >
             Logout
           </Link>
@@ -149,9 +163,9 @@ const NavigationBar = () => {
         <MenuItem onClick={handleProfileMenuOpen}>
           <Link
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
-            to={`/profile`}
+            to={`/account`}
           >
-            Profile
+            Account
           </Link>
         </MenuItem>
       ) : null}

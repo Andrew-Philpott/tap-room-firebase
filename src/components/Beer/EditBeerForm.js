@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { useFirestore } from "react-redux-firebase";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   mainContent: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
 export const EditBeerForm = () => {
   const classes = useStyles();
   const { id } = useParams();
-
+  const history = useHistory();
   const firestore = useFirestore();
   const [beer, setBeer] = useState({});
 
@@ -48,10 +49,8 @@ export const EditBeerForm = () => {
       alcoholContent: parseInt(event.target.alcoholContent.value),
       pints: parseInt(event.target.pints.value),
     };
-    return firestore.update(
-      { collection: "beers", doc: id },
-      propertiesToUpdate
-    );
+    firestore.update({ collection: "beers", doc: id }, propertiesToUpdate);
+    history.push("/ontap");
   }
 
   return (
@@ -158,7 +157,13 @@ export const EditBeerForm = () => {
             />
           </div>
 
-          <Button type="submit">Add Beer</Button>
+          <Button
+            style={{ backgroundColor: "white", color: "black" }}
+            className="btn btn-primary"
+            type="submit"
+          >
+            Add Beer
+          </Button>
         </form>
       </div>
     </div>

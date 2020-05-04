@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { useFirestore } from "react-redux-firebase";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   mainContent: {
@@ -16,11 +17,11 @@ const useStyles = makeStyles({
 export const NewBeerForm = () => {
   const classes = useStyles();
   const firestore = useFirestore();
-
+  const history = useHistory();
   function addBeerToFirestore(event) {
     event.preventDefault();
 
-    return firestore.collection("beers").add({
+    firestore.collection("beers").add({
       name: event.target.name.value,
       brand: event.target.brand.value,
       color: event.target.color.value,
@@ -30,6 +31,7 @@ export const NewBeerForm = () => {
       alcoholContent: parseInt(event.target.alcoholContent.value),
       pints: parseInt(event.target.pints.value),
     });
+    history.push("/ontap");
   }
   return (
     <div style={classes.mainContext}>
@@ -130,7 +132,14 @@ export const NewBeerForm = () => {
             />
           </div>
 
-          <Button type="submit">Add Beer</Button>
+          <Button
+            style={{ backgroundColor: "white", color: "black" }}
+            type="submit"
+            className="btn btn-primary"
+            type="submit"
+          >
+            Add Beer
+          </Button>
         </form>
       </div>
     </div>
