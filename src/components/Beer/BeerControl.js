@@ -10,7 +10,6 @@ import * as a from "../../actions";
 class BeerControl extends React.Component {
   handleNewBeerFormSubmission = (newBeer) => {
     const { dispatch } = this.props;
-    dispatch(a.newBeer(newBeer));
     dispatch(a.toggleNewBeerFormVisibility());
   };
 

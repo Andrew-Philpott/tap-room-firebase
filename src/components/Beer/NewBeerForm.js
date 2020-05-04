@@ -1,15 +1,17 @@
-import { v4 } from "uuid";
 import React from "react";
 import PropTypes from "prop-types";
 import { Input, Button, Grid } from "@material-ui/core";
 import { FormControl, InputLabel } from "@material-ui/core";
+import { useFirestore } from "react-redux-firebase";
 
 export const NewBeerForm = (props) => {
-  const isBackgroundBlack = false;
-  function handleNewBeerFormSubmission(event) {
+  const firestore = useFirestore();
+
+  function addBeerToFirestore(event) {
     event.preventDefault();
-    props.onNewBeerFormSubmission({
-      id: v4(),
+    props.onNewBeerFormSubmission();
+
+    return firestore.collection("beers").add({
       name: event.target.name.value,
       brand: event.target.brand.value,
       color: event.target.color.value,
@@ -27,10 +29,10 @@ export const NewBeerForm = (props) => {
           width: "100%",
           marginTop: "25%",
           color: "white",
-          backgroundColor: isBackgroundBlack ? "black" : "white",
+          backgroundColor: "black",
         }}
       >
-        <form onSubmit={handleNewBeerFormSubmission}>
+        <form onSubmit={addBeerToFirestore}>
           <Grid container>
             <Grid item xs={12}>
               <FormControl variant="outlined">
