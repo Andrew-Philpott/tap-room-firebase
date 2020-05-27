@@ -2,45 +2,15 @@
 
 # Tap Room
 
-#### React Independent Project Exercise for [Epicodus](https://www.epicodus.com/), 05.01.2020
-
 #### By **Andrew Philpott**
 
-[About](#About) | [Prompt](#Prompt) | [User Stories](#User-Stories) | [React Component Diagrams](#React-Component-Diagrams) | [Bugs](#Known-Bugs) | [Technologies](#Technologies-Used) | [Contact](#Support-and-Contact-Details)
+[About](#About) | [User Stories](#User-Stories) | [Setup/Installation Requirements](#Setup/Installation-Requirements) | [Bugs](#Known-Bugs) | [Technologies](#Technologies-Used) | [Contact](#Support-and-Contact-Details)
 
 </div>
 
 ## About
 
-This is a web application to practice using Redux to handle state in React. The application keeps track of the different beers offered at Tap House, displaying beer price, number of pints, flavors, aromas, and other stats. Full CRUD operation is available to all users.
-
-## Prompt
-
-Independent Projects Review
-Welcome to your second React independent project! Before you begin, take a moment to revisit and review the Independent Projects and Code Reviews lesson.
-
-Tap Room
-This is the second part of a two-week project. Last week, you built a tap room using local and shared state in React. This week, you will update your application to incorporate Redux.
-
-Before getting started, clone or fork the repo of the project you completed last week. Do not make changes to the repository you submitted for last week's independent project. You will be asked to resubmit if you simply update last week's repository.
-
-Here are the requirements for the refactor:
-
-All state in your application should be handled by Redux (even if React can handle it locally).
-All reducers should be tested thoroughly, and all tests must be passing.
-Action creators and constants should be used.
-If you finish early, continue building out your application as you see fit. This is a great opportunity to create a portfolio piece!
-
-Objectives
-This week's progress will be checked for the following objectives:
-
-- [x] React application works as expected and follows best practices, including using JSX, props, and prop types.
-- [x] Redux is used for all state.
-- [x] Jest is used to test all reducers.
-- [x] Actions and action constants are used.
-- [x] Project is in a polished, portfolio-quality state.
-- [x] Project is submitted by the deadline.
-- [x] Project demonstrates an understanding of this week's concepts. If prompted, you can discuss your code with an instructor using the correct terminology.
+This is a web application to practice using firebase to handle state in React. The application keeps track of the different beers offered at Tap House, displaying beer price, number of pints, flavors, aromas, and other stats. Full CRUD operation is available to all users.
 
 ## User Stories
 
@@ -59,21 +29,14 @@ This week's progress will be checked for the following objectives:
 
 ## Setup/Installation Requirements
 
-_Clone this repository._
-_Navigate to tap-room directory_
-_\$npm install to download dependencies_
-_\$npm run start to run the application_
-_Application will run on localhost:3000_
-
-## React Diagrams
-
-### Component
-
-<img style="width:600px" src="./public/TapRoomRedux.png">
-
-### Wireframe
-
-<img style="width:600px" src="./public/TapRoomReduxWireFrame.png">
+- _Clone this repository._
+- _Navigate to tap-room directory_
+- _\$npm install to download dependencies_
+- _[Create a firebase database](https://firebase.google.com/?gclid=Cj0KCQjwn7j2BRDrARIsAHJkxmyL64udoYEABQbakO1VFWHbE-hVh2wCaxCYfu2QSn18wSr-A5KMnocaAi6gEALw_wcB)_
+- _Enable user authentication for your database_
+- _Create a .env file with the constants REACT_APP_FIREBASE_API_KEY, REACT_APP_FIREBASE_AUTH_DOMAIN, REACT_APP_FIREBASE_DATABASE_URL, REACT_APP_FIREBASE_PROJECT_ID, REACT_APP_FIREBASE_STORAGE_BUCKET, REACT_APP_FIREBASE_MESSAGING_SENDER_ID, REACT_APP_FIREBASE_APP_ID equal to the strings provided for your database._
+- \$npm run start to run the application\_
+- _Application will run on localhost:3000_
 
 ## Known Bugs
 

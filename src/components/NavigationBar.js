@@ -8,7 +8,7 @@ import Menu from "@material-ui/core/Menu";
 import { Button } from "@material-ui/core";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
-import taphouselogo from "../../assets/img/taphouselogo.png";
+import taphouselogo from "../assets/img/taphouselogo.png";
 import firebase from "firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router-dom";
@@ -95,12 +95,12 @@ const NavigationBar = () => {
     >
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <Link
+        <Button
           style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
           onClick={handleSignOut}
         >
           Logout
-        </Link>
+        </Button>
       </MenuItem>
     </Menu>
   );
@@ -151,12 +151,12 @@ const NavigationBar = () => {
         </MenuItem>
       ) : (
         <MenuItem>
-          <Link
+          <Button
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
             onClick={handleSignOut}
           >
             Logout
-          </Link>
+          </Button>
         </MenuItem>
       )}
       {user != null ? (
@@ -212,13 +212,15 @@ const NavigationBar = () => {
               About
             </Button>
             {user != null ? (
-              <Button
-                className={classes.navLinks}
-                aria-controls={menuId}
-                onClick={handleProfileMenuOpen}
-              >
-                Account
-              </Button>
+              <Link to={`/account`}>
+                <Button
+                  className={classes.navLinks}
+                  aria-controls={menuId}
+                  onClick={handleProfileMenuOpen}
+                >
+                  Account
+                </Button>
+              </Link>
             ) : (
               <Button style={{ color: "white" }} href={`/login`}>
                 Login
