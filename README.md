@@ -48,8 +48,9 @@ No known bugs at this time.
 - CSS
 - JavaScript
 - Material UI
+- Bootstrap
 - React
-- Draw.io
+- Firebase
 
 ## Support and Contact Details
 
